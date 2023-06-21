@@ -1,0 +1,7 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "debug.javascript.defaultRuntimeExecutable": {
+        
+        "pwa-node": "node"
+    }
+}

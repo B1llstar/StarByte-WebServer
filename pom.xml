@@ -72,11 +72,24 @@
     <systemPath>${project.basedir}/lib/elevenlabs-api-11.jar</systemPath>
 </dependency>
 
+    <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>4.9.1</version>
+    </dependency>
+
       <dependency>
     <groupId>com.sparkjava</groupId>
     <artifactId>spark-core</artifactId>
     <version>2.9.3</version> <!-- Replace with the desired version -->
 </dependency>
+
+<dependency>
+    <groupId>org.java-websocket</groupId>
+    <artifactId>Java-WebSocket</artifactId>
+    <version>1.5.1</version> <!-- Check for latest version -->
+</dependency>
+
 
 <!-- Apache HttpClient -->
     <dependency>
@@ -89,6 +102,17 @@
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
         <version>20230227</version>
+    </dependency>
+    
+        <dependency>
+        <groupId>org.eclipse.jetty.websocket</groupId>
+        <artifactId>websocket-client</artifactId>
+        <version>9.4.43.v20210629</version>
+    </dependency>
+    <dependency>
+        <groupId>org.eclipse.jetty.websocket</groupId>
+        <artifactId>javax-websocket-client-impl</artifactId>
+        <version>9.4.43.v20210629</version>
     </dependency>
     
 

@@ -23,11 +23,11 @@ public class SparkProxy {
         port(8080);
 
         // Define your endpoint
-        post("/proxy", (request, response) -> {
+        post("/textgen", (request, response) -> {
             // Parse the JSON request body
             JSONObject jsonObject = new JSONObject(request.body());
 
-            // Get the 'message' field value
+            // Get the 'prompt' field value
             String message = jsonObject.getString("prompt");
 
             // Print the message
@@ -54,7 +54,7 @@ public class SparkProxy {
                         JSONObject payload = new JSONObject();
                         payload.put("prompt", message);
                         payload.put("temperature", 0.5);
-                        payload.put("max_new_tokens", 500);
+                        payload.put("max_new_tokens", 300);
 
                         URL url = new URL(server);
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

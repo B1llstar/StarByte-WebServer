@@ -32,7 +32,7 @@ public class SparkProxy {
             String message = jsonObject.getString("prompt");
 
             // Print the message
-            System.out.println("Received prompt: " + message);
+            //System.out.println("Received prompt: " + message);
 
             StringBuilder responseBody = new StringBuilder();
 
@@ -82,7 +82,7 @@ public class SparkProxy {
                             }
                         }
 
-                        System.out.println("Response body: " + responseBody.toString());
+                        //System.out.println("Response body: " + responseBody.toString());
 
                         // Close the HTTP connection
                         connection.disconnect();

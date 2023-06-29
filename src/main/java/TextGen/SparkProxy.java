@@ -15,7 +15,8 @@ public class SparkProxy {
 	
 	// Instantiate the LoadBalancer
     private static LoadBalancer loadBalancer = new LoadBalancer(Arrays.asList(
-            "http://localhost:5000/api/v1/generate"
+            "http://142.112.54.19:44309/api/v1/generate"
+    		//"http://127.0.0.1:5000/api/v1/generate"
     ));
 
     public static void main(String[] args) {
@@ -53,8 +54,9 @@ public class SparkProxy {
                         // Create JSON payload for the HTTP connection
                         JSONObject payload = new JSONObject();
                         payload.put("prompt", message);
-                        payload.put("temperature", 0.5);
-                        payload.put("max_new_tokens", 300);
+                        //payload.put("temperature", 0.9);
+                        //payload.put("repetition_penalty", 1.3);
+                        //payload.put("max_new_tokens", 300);
 
                         URL url = new URL(server);
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -90,8 +92,9 @@ public class SparkProxy {
                     } catch (Exception e) {
                         // Mark the server as unreachable
                         loadBalancer.markAsUnreachable(server);
-                        loadBalancer.releaseServer(server);
                         System.out.println("Server " + server + " is unreachable. Moving on to next server.");
+                        loadBalancer.releaseServer(server);
+                        usedServer = null;
                     }
                 }
                 

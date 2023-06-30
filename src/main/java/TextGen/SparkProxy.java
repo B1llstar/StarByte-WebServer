@@ -1,5 +1,6 @@
 package TextGen;
 import static spark.Spark.*;
+
 import org.json.JSONObject;
 
 import spark.Spark;
@@ -10,6 +11,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class SparkProxy {
 	
@@ -25,6 +29,8 @@ public class SparkProxy {
 
         // Define your endpoint
         post("/textgen", (request, response) -> {
+        	SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");
+        	
             // Parse the JSON request body
             JSONObject jsonObject = new JSONObject(request.body());
 
@@ -32,7 +38,7 @@ public class SparkProxy {
             String message = jsonObject.getString("prompt");
 
             // Print the message
-            //System.out.println("Received prompt: " + message);
+            //System.out.println(request.ip() + " - " + sdf.format(new Date()) + " Prompt: " + message);
 
             StringBuilder responseBody = new StringBuilder();
 
@@ -82,7 +88,7 @@ public class SparkProxy {
                             }
                         }
 
-                        //System.out.println("Response body: " + responseBody.toString());
+                        //System.out.println(request.ip() + " - " + sdf.format(new Date()) + " Response body: " + responseBody.toString());
 
                         // Close the HTTP connection
                         connection.disconnect();

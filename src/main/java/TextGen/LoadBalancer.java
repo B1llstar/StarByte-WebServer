@@ -1,4 +1,5 @@
 package TextGen;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -38,7 +39,8 @@ public class LoadBalancer {
 
         if (leastBusyServer != null) {
             servers.put(leastBusyServer, minLoad + 1);
-            System.out.println("[" + (minLoad + 1) + "] Selected: " + leastBusyServer);
+            SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");
+            System.out.println(sdf.format(new Date()) + " [" + (minLoad + 1) + "] Selected: " + leastBusyServer);
         }
         
         return leastBusyServer;
@@ -47,7 +49,8 @@ public class LoadBalancer {
     public synchronized void releaseServer(String server) {
         if (server != null) {
             servers.put(server, servers.get(server) - 1);
-            System.out.println("[" + servers.get(server) + "] Released: " + server);
+            SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");
+            System.out.println(sdf.format(new Date()) + " [" + servers.get(server) + "] Released: " + server);
         }
     }
 

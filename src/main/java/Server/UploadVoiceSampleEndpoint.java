@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class UploadVoiceSampleEndpoint {
+public class UploadVoiceSampleEndpoint { /* 
     public void handleUploadVoiceSample() {
         options("/uploadVoiceSample", (req, res) -> {
             String accessControlRequestHeaders = req.headers("Access-Control-Request-Headers");
@@ -38,8 +38,8 @@ public class UploadVoiceSampleEndpoint {
                 return "An error occurred: " + e.getMessage();
             }
         });
-    }
-
+    }*/
+/* 
     private void saveFile(InputStream inputStream, String filename) throws IOException {
         File outputFile = new File(filename);
         try (OutputStream outputStream = new FileOutputStream(outputFile)) {
@@ -50,4 +50,5 @@ public class UploadVoiceSampleEndpoint {
             }
         }
     }
+    */
 }

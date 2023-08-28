@@ -1,6 +1,5 @@
 package Server;
 
-
 import static spark.Spark.*;
 
 public class Main {
@@ -21,24 +20,28 @@ public class Main {
 
     public static void configureRoutes() {
         // Register your endpoints here
-        //get("/hello", (req, res) -> "Hello, world!");
-           // Enable CORS for all routes
+        // get("/hello", (req, res) -> "Hello, world!");
+        
+        // Enable CORS for all routes
         before((request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
             response.header("Access-Control-Allow-Headers", "Content-Type");
         });
+        
         // Example endpoint using SynthesizeSpeechWithChosenVoiceEndpoint class
         SynthesizeSpeechWithChosenVoiceEndpoint synthesizeSpeechEndpoint = new SynthesizeSpeechWithChosenVoiceEndpoint();
         synthesizeSpeechEndpoint.handleSynthesizeSpeechRequest();
-
-        UploadVoiceSampleEndpoint uploadSpeechFromSampleEndpoint = new UploadVoiceSampleEndpoint();
-        uploadSpeechFromSampleEndpoint.handleUploadVoiceSample();
+        
+        // MakeNewVoiceFromSamples endpoint
+        post("/makeNewVoiceFromSamples", (req, res) -> {
+            // Handle the request logic here
+            return "Response for /makeNewVoiceFromSamples";
+        });
 
         // Add more routes here
         // For example:
         // post("/another-route", (req, res) -> "Response for /another-route");
         // get("/hello", (req, res) -> "Hello, world!");
     }
-
 }

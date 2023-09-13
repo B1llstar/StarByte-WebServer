@@ -1,4 +1,4 @@
-package TextGen;
+package Server.LoadBalancer;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

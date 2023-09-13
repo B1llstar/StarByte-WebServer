@@ -1,4 +1,4 @@
-package Server;
+package Server.ElevenLabs;
 
 import static spark.Spark.*;
 
@@ -12,31 +12,29 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Server.LoadBalancer.LoadBalancer;
+
 public class GetVoicesEndpoint {
-    public void configureGetVoicesRoute() {
+    private LoadBalancer loadBalancer;
+
+    GetVoicesEndpoint(LoadBalancer loadBalancer) {
+        this.loadBalancer = loadBalancer;
+    }
+
+    public void handleGetVoicesRequest() {
+
         // Your other route configurations...
 
-        // Create a new endpoint for getting voice
-            // Define a route for /tts
-    
-    
-            options("/*", (req, res) -> {
-                res.status(200);
-                return "OK";
-            });
-            
         post("/getVoices", (req, res) -> {
-           
-    
-           
-           // String elevenLabsApiKey = "5ae6f3df26647fce53b9c6dbd6bd825b"; // Replace with your API key
+
+         
             String elevenLabsEndpoint = "https://api.elevenlabs.io/v1/voices";
 
-             // Parse the JSON request body
-             JSONObject requestBody = new JSONObject(req.body());
+            // Parse the JSON request body
+            JSONObject requestBody = new JSONObject(req.body());
 
-             // Extract the xi-api-key from the request body
-             String xiApiKey = requestBody.getString("xi-api-key");
+            // Extract the xi-api-key from the request body
+            String xiApiKey = requestBody.getString("xi-api-key");
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(elevenLabsEndpoint))

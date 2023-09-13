@@ -1,4 +1,4 @@
-package Server;
+package Server.ElevenLabs;
 
 import static spark.Spark.*;
 import org.apache.http.HttpResponse;
@@ -17,7 +17,7 @@ import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
-import TextGen.LoadBalancer;
+import Server.LoadBalancer.LoadBalancer;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -30,7 +30,7 @@ public class ElevenlabsEndpoint {
 
     private LoadBalancer loadBalancer;
 
-    ElevenlabsEndpoint(LoadBalancer loadBalancer) {
+    public ElevenlabsEndpoint(LoadBalancer loadBalancer) {
         this.loadBalancer = loadBalancer;
 
     }

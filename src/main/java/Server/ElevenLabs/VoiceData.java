@@ -1,4 +1,4 @@
-package Server;
+package Server.ElevenLabs;
 
 public class VoiceData {
     private String voice_id;

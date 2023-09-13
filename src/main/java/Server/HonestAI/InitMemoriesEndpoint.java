@@ -1,11 +1,11 @@
-package Core;
+package Server.HonestAI;
 
 import static spark.Spark.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import TextGen.LoadBalancer;
+import Server.LoadBalancer.LoadBalancer;
 import spark.Spark;
 
 import java.io.BufferedReader;
@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
     
         private LoadBalancer loadBalancer;
         private static final AtomicInteger charIdCounter = new AtomicInteger(0);
-        InitMemoriesEndpoint(LoadBalancer loadBalancer) {
+        public InitMemoriesEndpoint(LoadBalancer loadBalancer) {
             this.loadBalancer = loadBalancer;
             
         }

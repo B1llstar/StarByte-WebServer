@@ -1,9 +1,11 @@
-package TextGen;
+package Server.HonestAI;
 
 import static spark.Spark.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import Server.LoadBalancer.LoadBalancer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

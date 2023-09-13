@@ -6,24 +6,28 @@ import java.util.Arrays;
 
 import javax.servlet.MultipartConfigElement;
 
-import TextGen.LoadBalancer;
 import spark.Spark;
 import Server.ElevenLabs.ElevenlabsEndpoint;
+import Server.ElevenLabs.GetVoicesEndpoint;
 import Server.HonestAI.InitMemoriesEndpoint;
 import Server.HonestAI.TextGenEndpoint;
+import Server.LoadBalancer.LoadBalancer;
 
 public class Main {
 
     public static void main(String[] args) {
         // Set the port for the Spark server
         port(6969);
-
-        // Set the static file location
+   
+     // Set the static file location
         staticFiles.location("/public");
+
+        FirebaseInitializer init = new FirebaseInitializer();
+        init.initialize();
         LoadBalancer loadBalancer = LoadBalancer.getInstance(Arrays.asList(
                 "http://184.67.78.114:41823/api/v1/chat" // port 5000
         ));
-
+        
         // Configure routes and endpoints
         configureRoutes(loadBalancer);
 
@@ -32,6 +36,8 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(Spark::stop));
 
     }
+// temp
+//    private static final String SERVICE_ACCOUNT_KEY_PATH = "C:/Users/B1llstar/Documents/Github/StarByte-WebServer/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
 
     public static void configureRoutes(LoadBalancer loadBalancer) {
 
@@ -57,5 +63,7 @@ public class Main {
         textGen.handleTextGenRequest();
         InitMemoriesEndpoint initMemories = new InitMemoriesEndpoint(loadBalancer);
         initMemories.handleInitMemoriesRequest();
+        GetVoicesEndpoint getVoices = new GetVoicesEndpoint(loadBalancer);
+        getVoices.handleGetVoicesRequest();
     }
 }

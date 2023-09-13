@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 import javax.servlet.MultipartConfigElement;
 
-import Server.ElevenlabsEndpoint;
 import TextGen.LoadBalancer;
-import TextGen.TextGenEndpoint;
 import spark.Spark;
-import Core.InitMemoriesEndpoint;
+import Server.ElevenLabs.ElevenlabsEndpoint;
+import Server.HonestAI.InitMemoriesEndpoint;
+import Server.HonestAI.TextGenEndpoint;
 
 public class Main {
 

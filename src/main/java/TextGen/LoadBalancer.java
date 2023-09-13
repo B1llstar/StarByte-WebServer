@@ -1,4 +1,5 @@
 package TextGen;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
@@ -7,14 +8,25 @@ public class LoadBalancer {
     // ConcurrentHashMap for storing server and their loads
     private static Map<String, Integer> servers = new ConcurrentHashMap<>();
 
-    // ConcurrentHashMap for storing servers that are unreachable along with the time they became unreachable
+    // ConcurrentHashMap for storing servers that are unreachable along with the
+    // time they became unreachable
     private static Map<String, Long> unreachableServers = new ConcurrentHashMap<>();
 
-    // Constructor for LoadBalancer
-    public LoadBalancer(List<String> serverList) {
+    // Singleton instance
+    private static LoadBalancer instance;
+
+    private LoadBalancer(List<String> serverList) {
         for (String server : serverList) {
             servers.put(server, 0);
         }
+    }
+
+    // Public method to get the instance
+    public static LoadBalancer getInstance(List<String> serverList) {
+        if (instance == null) {
+            instance = new LoadBalancer(serverList);
+        }
+        return instance;
     }
 
     public synchronized String getLeastBusyServer() {
@@ -22,7 +34,8 @@ public class LoadBalancer {
         int minLoad = Integer.MAX_VALUE;
 
         for (Map.Entry<String, Integer> entry : servers.entrySet()) {
-            // Check if server is marked as unreachable and has been for less than 1 minutes (60000 milliseconds)
+            // Check if server is marked as unreachable and has been for less than 1 minutes
+            // (60000 milliseconds)
             if (unreachableServers.containsKey(entry.getKey()) &&
                     System.currentTimeMillis() - unreachableServers.get(entry.getKey()) < 60000) {
                 continue;
@@ -42,7 +55,7 @@ public class LoadBalancer {
             SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");
             System.out.println(sdf.format(new Date()) + " [" + (minLoad + 1) + "] Selected: " + leastBusyServer);
         }
-        
+
         return leastBusyServer;
     }
 

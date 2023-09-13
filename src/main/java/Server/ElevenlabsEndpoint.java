@@ -27,7 +27,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 public class ElevenlabsEndpoint {
-    
+
     private LoadBalancer loadBalancer;
 
     ElevenlabsEndpoint(LoadBalancer loadBalancer) {
@@ -46,7 +46,7 @@ public class ElevenlabsEndpoint {
     public void handleElevenlabsRequest() {
 
         post("/tts", (req, res) -> {
-            port(6969); // Replac
+           // port(6969); // Replac
 
             JSONObject payload = new JSONObject(new JSONTokener(req.body()));
 

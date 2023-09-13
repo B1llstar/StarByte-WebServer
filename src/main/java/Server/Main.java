@@ -10,6 +10,7 @@ import Server.ElevenlabsEndpoint;
 import TextGen.LoadBalancer;
 import TextGen.TextGenEndpoint;
 import spark.Spark;
+import Core.InitMemoriesEndpoint;
 
 public class Main {
 
@@ -54,9 +55,7 @@ public class Main {
         elevenlabsEndpoint.handleElevenlabsRequest();
         TextGenEndpoint textGen = new TextGenEndpoint(loadBalancer);
         textGen.handleTextGenRequest();
-        post("/makeNewVoiceFromSamples", (req, res) -> {
-            return "Response for /makeNewVoiceFromSamples";
-        });
-
+        InitMemoriesEndpoint initMemories = new InitMemoriesEndpoint(loadBalancer);
+        initMemories.handleInitMemoriesRequest();
     }
 }

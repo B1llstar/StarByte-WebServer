@@ -1,6 +1,0 @@
-Server\MakeNewVoiceFromSamplesEndpoint.class
-Server\UploadVoiceSampleEndpoint.class
-Server\Main.class
-Server\SynthesizeSpeechWithChosenVoiceEndpoint.class
-Server\Twilio.class
-Server\FileDownloadClient.class

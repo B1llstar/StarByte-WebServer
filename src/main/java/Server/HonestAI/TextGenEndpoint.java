@@ -5,6 +5,7 @@ import static spark.Spark.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Server.Main;
 import Server.LoadBalancer.LoadBalancer;
 
 import java.io.BufferedReader;
@@ -21,8 +22,8 @@ public class TextGenEndpoint {
     }
 
     public void handleTextGenRequest() {
-      //  port(6969); don't think it's needed since we're using
-      // main in a different file now
+        // port(6969); don't think it's needed since we're using
+        // main in a different file now
         // Define your endpoint
         post("/textgen", (request, response) -> {
 
@@ -53,6 +54,7 @@ public class TextGenEndpoint {
                     }
 
                     usedServer = server;
+                    usedServer = Main.endpoint + "api/v1/chat";
 
                     try {
                         // Create JSON payload for the HTTP connection

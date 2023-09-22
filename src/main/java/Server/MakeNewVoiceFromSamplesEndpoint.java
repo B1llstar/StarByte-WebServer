@@ -42,7 +42,7 @@ public class MakeNewVoiceFromSamplesEndpoint {
     public String handleMakeNewVoiceFromSamplesRequest(String aiId, String userId) {
         client = ElevenLabsAPI.getInstance();
         client.setAPIKey(System.getenv("ELEVENLABS"));
-        String[] fileUrls = getFileUrlsFromDatabase(userId, aiId);
+        String[] fileUrls = getFileUrlsFromDatabase(userId);
         String[] fileNames = downloadFilesFromStorage(fileUrls);
         String voiceId = makeVoice(aiId, fileNames, "accent", "japanese");
                 deleteLocalFiles(fileNames);

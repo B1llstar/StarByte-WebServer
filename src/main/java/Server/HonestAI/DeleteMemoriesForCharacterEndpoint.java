@@ -20,39 +20,35 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InitMemoriesEndpoint {
+public class DeleteMemoriesForCharacterEndpoint {
 
     private LoadBalancer loadBalancer;
     private static final AtomicInteger charIdCounter = new AtomicInteger(0);
 
-    public InitMemoriesEndpoint(LoadBalancer loadBalancer) {
+    public DeleteMemoriesForCharacterEndpoint(LoadBalancer loadBalancer) {
         this.loadBalancer = loadBalancer;
 
     }
 
-    public void handleInitMemoriesRequest() {
+    public void handleDeleteMemoriesForCharacterRequest() {
         // port(6969);
-        post("/initMemories", (request, response) -> {
+        post("/deleteMemories", (request, response) -> {
             SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");
 
             // Parse the JSON request body
             JSONObject jsonObject = new JSONObject(request.body());
 
             // Get the 'char_name' and 'username' fields from the JSON
-            String charName = jsonObject.getString("char_name");
+            String charName = jsonObject.getString("char_id");
             String username = jsonObject.getString("username");
-            String ai_id = jsonObject.getString("ai_id");
-
 
             // Create a unique char_id for each request
             String charId = Integer.toString(charIdCounter.incrementAndGet());
 
-            // Combine 'char_name' and 'username' to create a JSON payload
+            // Combine 'char_id' and 'username' to create a JSON payload
             JSONObject payload = new JSONObject();
-            payload.put("char_name", charName);
+            payload.put("char_id", charName);
             payload.put("username", username);
-            payload.put("ai_id", ai_id);
-
 
             StringBuilder responseBody = new StringBuilder();
 
@@ -69,7 +65,9 @@ public class InitMemoriesEndpoint {
                      * break;
                      * }
                      */
-                    usedServer = Main.endpoint + "api/createUnit";
+
+                    String prefix = Main.endpoint; 
+                    usedServer = prefix + "api/deleteCharMemoryFolder";
 
                     try {
                         // Send the JSON payload to the server
@@ -116,7 +114,7 @@ public class InitMemoriesEndpoint {
             }
 
             // Return a response with the generated char_id
-        
+      
             response.status(201);
 
             return responseBody.toString();

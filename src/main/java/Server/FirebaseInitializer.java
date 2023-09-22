@@ -7,8 +7,11 @@ import java.io.FileInputStream;
 
 public class FirebaseInitializer {
     // key for debugging
-    private static final String SERVICE_ACCOUNT_KEY_PATH = "C:/Users/B1llstar/Documents/Github/StarByte-WebServer/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
-    public static void initialize() {
+    // path goes here
+// FileInputStream serviceAccount = new FileInputStream("/etc/opt/secret/fb_key");
+ // private static final String SERVICE_ACCOUNT_KEY_PATH = "/etc/opt/secret/fb_key";
+  
+public void initialize() {
         try {
             
         //    FileInputStream serviceAccount = new FileInputStream("/etc/opt/secret/fb_key");

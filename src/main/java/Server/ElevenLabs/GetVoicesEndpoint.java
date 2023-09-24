@@ -22,6 +22,7 @@ import Server.Firebase.FirebaseInitializer;
 import Server.LoadBalancer.LoadBalancer;
 
 public class GetVoicesEndpoint {
+
     private LoadBalancer loadBalancer;
 
     public GetVoicesEndpoint(LoadBalancer loadBalancer) {
@@ -29,46 +30,24 @@ public class GetVoicesEndpoint {
     }
 
     public void handleGetVoicesRequest() {
+      
+                    System.out.println("Handling /getVoices request...");
 
         // Your other route configurations...
 
         post("/getVoices", (req, res) -> {
 
-         
             String elevenLabsEndpoint = "https://api.elevenlabs.io/v1/voices";
-            Firestore firestore = FirebaseInitializer.getFirestore();
             // Parse the JSON request body
             JSONObject requestBody = new JSONObject(req.body());
 
-            // Extract the xi-api-key from the request body
-            String userId = requestBody.getString("userId");
-    // Reference to the Firestore "users" collection
-    CollectionReference usersCollection = firestore.collection("users");
-
-// Get the user document based on the userId
-    DocumentReference userDocument = usersCollection.document(userId);
-
-// Retrieve the xi-api-key field
-ApiFuture<DocumentSnapshot> apiFuture = userDocument.get();
-DocumentSnapshot document = apiFuture.get(); // This blocks until the data is retrieved
-String xiApiKey;
-if (document.exists()) {
-     xiApiKey = document.getString("xi-api-key");
-    // Now, xiApiKey contains the value of the xi-api-key property for the specified user
-} else {
-    System.out.println("No api key found!");
-res.status(500);
-return "No api key found!";
-
-    // The user document does not exist, handle this case as needed
-}
-
-
-// ---
+              String xiApiKey = requestBody.getString("xi-api-key");
+  
+            // ---
             // Get the user id
             // Check the user id in firestore
             // find relevant directory
-// ---
+            // ---
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(elevenLabsEndpoint))
                     .header("xi-api-key", xiApiKey)

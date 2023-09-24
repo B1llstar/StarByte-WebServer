@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import static spark.Spark.post;
 
 public class TextGenEndpoint {
     private LoadBalancer loadBalancer;
@@ -46,14 +47,15 @@ public class TextGenEndpoint {
                 String usedServer = null;
 
                 while (true) {
+                    /* 
                     // Get the least busy server
                     String server = loadBalancer.getLeastBusyServer();
                     if (server == null) {
                         System.out.println("[CRITICAL] All servers are unreachable!");
                         break;
                     }
-
-                    usedServer = server;
+*/
+  //                  usedServer = server;
                     usedServer = Main.endpoint + "api/v1/chat";
 
                     try {
@@ -67,7 +69,7 @@ public class TextGenEndpoint {
                         payload.put("user_input", user_input);
 
                         // Send the JSON payload
-                        URL url = new URL(server);
+                        URL url = new URL(usedServer);
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                         connection.setRequestMethod("POST");
                         connection.setRequestProperty("Content-Type", "application/json");
@@ -118,22 +120,28 @@ public class TextGenEndpoint {
 
                         // Close the HTTP connection
                         connection.disconnect();
+                          // Create a JSON response object
+            JSONObject jsonResponseObject = new JSONObject();
+            jsonResponseObject.put("response_message", responseMessage);
+            jsonResponseObject.put("history", historyObject);
 
+            return jsonResponseObject.toString();
                         // Break the loop as the request was successful
-                        break;
                     } catch (Exception e) {
                         // Mark the server as unreachable
-                        loadBalancer.markAsUnreachable(server);
-                        System.out.println("Server " + server + " is unreachable. Moving on to the next server.");
-                        loadBalancer.releaseServer(server);
-                        usedServer = null;
+                       // loadBalancer.markAsUnreachable(server);
+                        System.out.println("Server " + usedServer + " is unreachable.");
+                        break;
+                        //loadBalancer.releaseServer(server);
+                       // usedServer = null;
                     }
                 }
 
                 // If a server was used, reduce its load
+                /* 
                 if (usedServer != null) {
                     loadBalancer.releaseServer(usedServer);
-                }
+                }*/
             }
 
             // Create a JSON response object

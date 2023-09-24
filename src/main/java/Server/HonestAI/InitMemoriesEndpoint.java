@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
-
 public class InitMemoriesEndpoint {
 
     private LoadBalancer loadBalancer;
@@ -31,6 +30,7 @@ public class InitMemoriesEndpoint {
     }
 
     public void handleInitMemoriesRequest() {
+      
         // port(6969);
         post("/initMemories", (request, response) -> {
             SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");

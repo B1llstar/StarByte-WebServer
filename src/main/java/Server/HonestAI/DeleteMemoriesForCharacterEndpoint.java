@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static spark.Spark.post;
+
 public class DeleteMemoriesForCharacterEndpoint {
 
     private LoadBalancer loadBalancer;
@@ -42,10 +44,9 @@ public class DeleteMemoriesForCharacterEndpoint {
             String charName = jsonObject.getString("char_id");
             String username = jsonObject.getString("username");
 
-            // Create a unique char_id for each request
-            String charId = Integer.toString(charIdCounter.incrementAndGet());
+            // Create a unique ai_id for each request
 
-            // Combine 'char_id' and 'username' to create a JSON payload
+            // Combine 'ai_id' and 'username' to create a JSON payload
             JSONObject payload = new JSONObject();
             payload.put("char_id", charName);
             payload.put("username", username);
@@ -66,8 +67,8 @@ public class DeleteMemoriesForCharacterEndpoint {
                      * }
                      */
 
-                    String prefix = Main.endpoint; 
-                    usedServer = prefix + "api/deleteCharMemoryFolder";
+                    String prefix = Main.endpoint;
+                    usedServer = prefix + "api/deleteUnit";
 
                     try {
                         // Send the JSON payload to the server
@@ -97,24 +98,25 @@ public class DeleteMemoriesForCharacterEndpoint {
 
                         // Close the HTTP connection
                         connection.disconnect();
-
+                        
+                        return responseBody.toString();
                         // Break the loop as the request was successful
-                        break;
                     } catch (Exception e) {
+
                         // Mark the server as unreachable
                         // loadBalancer.markAsUnreachable(server);
                         // System.out.println("Server " + server + " is unreachable. Moving on to the
                         // next server.");
                         // loadBalancer.releaseServer(server);
                         e.printStackTrace();
-                        usedServer = null;
+                        break;
                     }
                 }
 
             }
 
-            // Return a response with the generated char_id
-      
+            // Return a response with the generated ai_id
+
             response.status(201);
 
             return responseBody.toString();

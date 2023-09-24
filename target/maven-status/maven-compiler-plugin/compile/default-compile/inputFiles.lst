@@ -1,8 +1,11 @@
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\ElevenLabs\GetVoicesEndpoint.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\HonestAI\InitMemoriesEndpoint.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\TextGeneration.java
+C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\HonestAI\GetCharsIDsForUserEndpoint.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\HonestAI\GenerateEndpoint.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\UploadVoiceSampleEndpoint.java
+C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\ElevenLabs\XiApiKeyFetcher.java
+C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\HonestAI\DeleteMemoriesForCharacterEndpoint.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\Twilio.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\Firebase\FirebaseInitializer.java
 C:\Users\B1llstar\Documents\Github\StarByte-WebServer\src\main\java\Server\HonestAI\TextGenEndpoint.java

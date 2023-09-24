@@ -8,9 +8,10 @@ import java.io.FileInputStream;
 
 public class FirebaseInitializer {
     // Initialize Firebase services
+    private static final String SERVICE_ACCOUNT_KEY_PATH = "/etc/opt/secret/fb_key";
     public static void initialize() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("/etc/opt/secret/fb_key");
+            FileInputStream serviceAccount = new FileInputStream(SERVICE_ACCOUNT_KEY_PATH);
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();

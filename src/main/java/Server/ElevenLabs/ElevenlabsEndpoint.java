@@ -34,6 +34,7 @@ public class ElevenlabsEndpoint {
         this.loadBalancer = loadBalancer;
 
     }
+
     private static final String ELEVENLABS_API_URL = "https://api.elevenlabs.io/v1/text-to-speech/";
 
     private static final String GCS_BUCKET_NAME = "ai-anyone.appspot.com";
@@ -46,18 +47,19 @@ public class ElevenlabsEndpoint {
     public void handleElevenlabsRequest() {
 
         post("/tts", (req, res) -> {
-           // port(6969); // Replac
+            // port(6969); // Replac
 
             JSONObject payload = new JSONObject(new JSONTokener(req.body()));
 
-            String userId = payload.getString("userId");
+            String userId = payload.getString("uid");
             String text = payload.getString("text");
-            String voiceId = payload.getString("voiceId"); //
+            String voiceId = payload.getString("voice_id"); //
+            String xiApiKey = payload.getString("xi-api-key");
 
             if (userId != null && !userId.isEmpty() && text != null && !text.isEmpty() && voiceId != null
                     && !voiceId.isEmpty()) {
                 // Call the generateSpeech method to obtain audio data
-                byte[] audioData = generateSpeech(text, voiceId);
+                byte[] audioData = generateSpeech(text, voiceId, xiApiKey);
 
                 if (audioData != null && audioData.length > 0) {
                     // Step 4: Server writes the audio response to a temporary file locally
@@ -126,17 +128,16 @@ public class ElevenlabsEndpoint {
         }
     }
 
-    private byte[] generateSpeech(String text, String voiceId) throws IOException {
+    private byte[] generateSpeech(String text, String voiceId, String xiApiKey) throws IOException {
         String urlStr = ELEVENLABS_API_URL + voiceId;
         URL url = new URL(urlStr);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        String apiKey = "5ae6f3df26647fce53b9c6dbd6bd825b"; // Replace with your Elevenlabs API key
 
         // Set request headers
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("xi-api-key", apiKey);
+        connection.setRequestProperty("xi-api-key", xiApiKey);
 
         connection.setRequestProperty("accept", "audio/mpeg");
         String payload = "{ \"text\": \"" + text + "\", \"model_id\": \"eleven_monolingual_v1\"}";
@@ -157,7 +158,8 @@ public class ElevenlabsEndpoint {
     }
 
     private String writeAudioDataToLocalFile(byte[] audioData) throws IOException {
-        String tempFileName = "temp_audio/output.mp3"; // You can use a temporary directory
+        String projectBaseDir = System.getProperty("user.dir");
+        String tempFileName = projectBaseDir + "/temp_audio/output.mp3";
         try (FileOutputStream outputStream = new FileOutputStream(tempFileName)) {
             outputStream.write(audioData);
         }

@@ -52,8 +52,9 @@ public class GenerateEndpoint {
                     }
  
 */
-             usedServer = Main.endpoint + "api/v1/generate";
 
+             usedServer = Main.endpoint + "api/v1/generate";
+System.out.println("Server used: " + usedServer);
                     try {
                         // Create JSON payload for the HTTP connection
                         JSONObject payload = new JSONObject();
@@ -101,38 +102,34 @@ public class GenerateEndpoint {
                         // Get the HTTP response code
                         int responseCode = connection.getResponseCode();
                         System.out.println("HTTP response code: " + responseCode);
-
-                        // Get the response body
+                        // Get the response bo dy
                         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                             String line;
                             while ((line = reader.readLine()) != null) {
                                 responseBody.append(line);
                             }
                         }
+                                                  System.out.println(responseBody.toString());
+
 
                         // Close the HTTP connection
                         connection.disconnect();
-
+return responseBody.toString();
                         // Break the loop as the request was successful
-                        break;
                     } catch (Exception e) {
                         // Mark the server as unreachable
                         System.out.println("Server is unreachable.");
+                        
                         usedServer = null;
                     }
                 }
 
-                // If a server was used, reduce its load
-                if (usedServer != null) {
-                    // loadBalancer.releaseServer(usedServer);
-                }
+              
             } else {
                 response.status(400); // Bad Request
                 return "Invalid request: 'prompt' field is missing or empty.";
             }
 
-            // Return a response
-            return responseBody.toString();
         });
     }
 }

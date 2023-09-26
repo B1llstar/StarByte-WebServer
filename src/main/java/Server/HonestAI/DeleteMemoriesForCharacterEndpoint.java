@@ -98,7 +98,7 @@ public class DeleteMemoriesForCharacterEndpoint {
 
                         // Close the HTTP connection
                         connection.disconnect();
-                        
+                        response.status(responseCode);
                         return responseBody.toString();
                         // Break the loop as the request was successful
                     } catch (Exception e) {

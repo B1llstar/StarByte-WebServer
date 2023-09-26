@@ -47,18 +47,19 @@ public class TextGenEndpoint {
                 String usedServer = null;
 
                 while (true) {
-                    /* 
-                    // Get the least busy server
-                    String server = loadBalancer.getLeastBusyServer();
-                    if (server == null) {
-                        System.out.println("[CRITICAL] All servers are unreachable!");
-                        break;
-                    }
-*/
-  //                  usedServer = server;
+                    /*
+                     * // Get the least busy server
+                     * String server = loadBalancer.getLeastBusyServer();
+                     * if (server == null) {
+                     * System.out.println("[CRITICAL] All servers are unreachable!");
+                     * break;
+                     * }
+                     */
+                    // usedServer = server;
                     usedServer = Main.endpoint + "api/v1/chat";
 
                     try {
+                        history = sanitizeHistory(history);
                         // Create JSON payload for the HTTP connection
                         JSONObject payload = new JSONObject();
                         payload.put("character", character);
@@ -67,6 +68,7 @@ public class TextGenEndpoint {
                         payload.put("name2", name2);
                         payload.put("context", context);
                         payload.put("user_input", user_input);
+                        payload.put("history", history);
 
                         // Send the JSON payload
                         URL url = new URL(usedServer);
@@ -120,28 +122,29 @@ public class TextGenEndpoint {
 
                         // Close the HTTP connection
                         connection.disconnect();
-                          // Create a JSON response object
-            JSONObject jsonResponseObject = new JSONObject();
-            jsonResponseObject.put("response_message", responseMessage);
-            jsonResponseObject.put("history", historyObject);
+                        // Create a JSON response object
+                        JSONObject jsonResponseObject = new JSONObject();
+                        jsonResponseObject.put("response_message", responseMessage);
+                        jsonResponseObject.put("history", historyObject);
 
-            return jsonResponseObject.toString();
+                        return jsonResponseObject.toString();
                         // Break the loop as the request was successful
                     } catch (Exception e) {
                         // Mark the server as unreachable
-                       // loadBalancer.markAsUnreachable(server);
+                        // loadBalancer.markAsUnreachable(server);
                         System.out.println("Server " + usedServer + " is unreachable.");
                         break;
-                        //loadBalancer.releaseServer(server);
-                       // usedServer = null;
+                        // loadBalancer.releaseServer(server);
+                        // usedServer = null;
                     }
                 }
 
                 // If a server was used, reduce its load
-                /* 
-                if (usedServer != null) {
-                    loadBalancer.releaseServer(usedServer);
-                }*/
+                /*
+                 * if (usedServer != null) {
+                 * loadBalancer.releaseServer(usedServer);
+                 * }
+                 */
             }
 
             // Create a JSON response object
@@ -152,5 +155,59 @@ public class TextGenEndpoint {
             return jsonResponseObject.toString();
         });
     }
+
+    // Helper method to sanitize the "history" object
+    private JSONObject sanitizeHistory(JSONObject history) {
+        JSONArray internalArray = history.getJSONArray("internal");
+        JSONArray visibleArray = history.getJSONArray("visible");
+
+        JSONArray uniqueInternal = new JSONArray();
+        JSONArray uniqueVisible = new JSONArray();
+
+        for (int i = 0; i < internalArray.length(); i++) {
+            JSONArray currentArray = internalArray.getJSONArray(i);
+            if (!containsDuplicate(uniqueInternal, currentArray)) {
+                uniqueInternal.put(currentArray);
+            }
+        }
+
+        for (int i = 0; i < visibleArray.length(); i++) {
+            JSONArray currentArray = visibleArray.getJSONArray(i);
+            if (!containsDuplicate(uniqueVisible, currentArray)) {
+                uniqueVisible.put(currentArray);
+            }
+        }
+
+        JSONObject sanitizedHistory = new JSONObject();
+        sanitizedHistory.put("internal", uniqueInternal);
+        sanitizedHistory.put("visible", uniqueVisible);
+
+        return sanitizedHistory;
+    }
+
+    // Helper method to check if an array already exists in the list
+    boolean containsDuplicate(JSONArray arrayToCheck, JSONArray currentArray) {
+        for (int i = 0; i < arrayToCheck.length(); i++) {
+            JSONArray existingArray = arrayToCheck.getJSONArray(i);
+            if (areArraysEqual(existingArray, currentArray)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper method to check if two JSON arrays are equal
+    boolean areArraysEqual(JSONArray array1, JSONArray array2) {
+        if (array1.length() != array2.length()) {
+            return false;
+        }
+        for (int i = 0; i < array1.length(); i++) {
+            if (!array1.get(i).equals(array2.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 // Set the port for your Spark application

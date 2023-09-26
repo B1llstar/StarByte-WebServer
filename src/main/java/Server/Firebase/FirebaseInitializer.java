@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 
 public class FirebaseInitializer {
     // Initialize Firebase services
-    private static final String SERVICE_ACCOUNT_KEY_PATH = "/etc/opt/secret/fb_key";
+    private static final String SERVICE_ACCOUNT_KEY_PATH = "/etc/opt/secret/fb_key/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
     public static void initialize() {
         try {
             FileInputStream serviceAccount = new FileInputStream(SERVICE_ACCOUNT_KEY_PATH);

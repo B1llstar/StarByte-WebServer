@@ -68,6 +68,8 @@ public class Main {
         deleteMemoriesForCharacterEndpoint.handleDeleteMemoriesForCharacterRequest();
         GenerateEndpoint endpoint = new GenerateEndpoint(loadBalancer);
         endpoint.handleGenerateRequest();
+        GetServerClientIdEndpoint getServerClientIdEndpoint = new GetServerClientIdEndpoint();
+        getServerClientIdEndpoint.handleGetServerClientIDRequest();
         GetCharsIDsForUserEndpoint getCharsIDsForUserEndpoint = new GetCharsIDsForUserEndpoint(loadBalancer);
         getCharsIDsForUserEndpoint.handleGetCharsIDsForUserEndpoint();
         InitMemoriesEndpoint initMemoriesEndpoint = new InitMemoriesEndpoint(loadBalancer);

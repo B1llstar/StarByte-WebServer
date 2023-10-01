@@ -40,7 +40,7 @@ public class ElevenlabsEndpoint {
     private static final String GCS_BUCKET_NAME = "ai-anyone.appspot.com";
     private static final String TEMP_AUDIO_COLLECTION = "temp_audio/";
 
-    private static final String SERVICE_ACCOUNT_KEY_PATH = "C:/Users/B1llstar/Documents/Github/StarByte-WebServer/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
+    private static final String SERVICE_ACCOUNT_KEY_PATH = "/etc/opt/secret/fb_key/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
 
     // Define a route for /tts
 

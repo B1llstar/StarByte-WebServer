@@ -12,7 +12,7 @@ import java.nio.channels.ReadableByteChannel;
 
 public class FileDownloader {
 
-    private static final String SERVICE_ACCOUNT_KEY_PATH = "C:/Users/B1llstar/Documents/Github/StarByte-WebServer/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
+    private static final String SERVICE_ACCOUNT_KEY_PATH = "/etc/opt/secret/fb_key/ai-anyone-firebase-adminsdk-m4zfc-d6e526a2a3.json";
     private static final String BUCKET_NAME = "ai-anyone";
     private static final String DESTINATION_FOLDER = "audio/";
 

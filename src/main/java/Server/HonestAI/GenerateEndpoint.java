@@ -26,9 +26,19 @@ public class GenerateEndpoint {
     public void handleGenerateRequest() {
         SimpleDateFormat sdf = new SimpleDateFormat("[dd/MMM/yyyy:HH:mm:ss]");
         post("/generate", (request, response) -> {
+            double temperature;
             // Parse the JSON request body
             JSONObject jsonObject = new JSONObject(request.body());
+            // Check if 'temperature' field exists
+if (jsonObject.has("temperature")) {
+     temperature = jsonObject.getDouble("temperature");
+     System.out.println("Detected temperature: " + temperature);
+    // Use 'temperature' as needed
+} else {
+    temperature = .54;
 
+    // Handle the case where 'temperature' is missing
+}
             // Get the 'prompt' field value
             String message = jsonObject.getString("prompt");
       
@@ -62,7 +72,7 @@ System.out.println("Server used: " + usedServer);
                         payload.put("max_new_tokens", 250);
                         payload.put("preset", "None");
                         payload.put("do_sample", true);
-                        payload.put("temperature", 0.54);
+                        payload.put("temperature", temperature);
                         payload.put("top_p", 0.1);
                         payload.put("typical_p", 1);
                         payload.put("epsilon_cutoff", 0);
@@ -87,6 +97,7 @@ System.out.println("Server used: " + usedServer);
                         payload.put("skip_special_tokens", true);
                         payload.put("stopping_strings", new JSONArray());
             
+                      
                         URL url = new URL(usedServer);
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                         connection.setRequestMethod("POST");

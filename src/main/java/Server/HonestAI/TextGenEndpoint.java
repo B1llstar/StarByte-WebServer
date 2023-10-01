@@ -30,6 +30,7 @@ public class TextGenEndpoint {
 
             // Parse the JSON request body
             JSONObject jsonObject = new JSONObject(request.body());
+            double temperature;
             String username = jsonObject.getString("username");
             String character = jsonObject.getString("character");
             String context = jsonObject.getString("context");
@@ -37,7 +38,15 @@ public class TextGenEndpoint {
             String name1 = jsonObject.getString("name1");
             String name2 = jsonObject.getString("name2");
             JSONObject history = jsonObject.getJSONObject("history");
-
+            if (jsonObject.has("temperature")) {
+                temperature = jsonObject.getDouble("temperature");
+               // Use 'temperature' as needed
+           } else {
+               temperature = .54;
+           
+               // Handle the case where 'temperature' is missing
+           }
+ 
             // Initialize response variables
             String responseMessage = null;
             JSONObject historyObject = null;
@@ -57,7 +66,7 @@ public class TextGenEndpoint {
                      */
                     // usedServer = server;
                     usedServer = Main.endpoint + "api/v1/chat";
-
+                  
                     try {
                         history = sanitizeHistory(history);
                         // Create JSON payload for the HTTP connection
@@ -69,7 +78,8 @@ public class TextGenEndpoint {
                         payload.put("context", context);
                         payload.put("user_input", user_input);
                         payload.put("history", history);
-
+                        payload.put("temperature", temperature);
+                      
                         // Send the JSON payload
                         URL url = new URL(usedServer);
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
